@@ -48,6 +48,7 @@
     "tape": "^4.6.3"
   },
   "dependencies": {
+    "lodash.throttle": "4.1.1",
     "react": "^15.4.1"
   }
 }

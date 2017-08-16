@@ -5,6 +5,7 @@ import getCurriedOnLoad from './helpers/get-curried-on-load';
 import getPlayerOpts from './helpers/get-player-opts';
 import initialize from './helpers/initialize';
 import installPlayerScript from './helpers/install-player-script';
+import PlayInView from './create-event-handlers/play-in-view';
 
 import defaultProps from './default-props';
 import propTypes from './prop-types';
@@ -46,6 +47,7 @@ class ReactJWPlayer extends Component {
 
   componentWillUnmount() {
     if (this.player && this.player.remove) { this.player.remove(); }
+    if (this.viewController) { this.viewController.off(); }
   }
 
   _initialize() {
@@ -55,6 +57,11 @@ class ReactJWPlayer extends Component {
     const playerOpts = getPlayerOpts(this.props);
 
     initialize({ component, player, playerOpts });
+
+    if (this.props.playInView) {
+      this.viewController = new PlayInView(this.player, this.props.playInViewPercentage);
+      this.viewController.on();
+    }
   }
 
   render() {
